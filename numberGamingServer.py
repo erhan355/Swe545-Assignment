@@ -8,15 +8,15 @@ def guess(guessedNumber):
     if not checkIsNumber(guessedNumber):
         resultText= 'You must input an integer'
         resultBoolean=False
-    elif guessedNumber > actualNumber:
+    elif int(guessedNumber) > actualNumber:
         resultText=  'Smaller than this'
         resultBoolean=False
-    elif guessedNumber < actualNumber:
+    elif int(guessedNumber) < actualNumber:
         resultText= 'Bigger than this'
         resultBoolean=False
     else:
         resultText= 'You win' +exit()
-        resultBoolean=False
+        resultBoolean=True
     return {'resultText':resultText, 'resultBoolean':resultBoolean}
 
 
@@ -24,16 +24,17 @@ def exit():
     global actualNumber,gameIsActive
     actualNumber = 0
     gameIsActive=False
-    return 'Good Bye'
+    return 'Good Bye '
 
 def createRandomVar():
     return random.randint(0, 100)
 
 def checkIsNumber(x):
-    if type(x) is not int :
-        return False
-    else:
+    try:
+        int(x)
         return True
+    except ValueError:
+        return False
 
 def options():
     return '1 - Guess  \n' \
@@ -43,9 +44,13 @@ def startGame():
     if not (gameIsActive):
      gameIsActive = True
      actualNumber = random.randint(0, 100)
-     return 'Game has been started'+'\n'+options()+"\n"
+     resultText= 'Game has been started'
+     resultBoolean=True
+     #return 'Game has been started'+'\n'+options()+"\n"
     else:
-      return 'Someone has been already playing this game. Please try later ! '
+      resultText=  'Someone has been already playing this game. Please try later ! '
+      resultBoolean=False
+    return {'resultText':resultText, 'resultBoolean':resultBoolean}
 # Restrict to a particular path.
 class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/RPC2',)
@@ -56,7 +61,7 @@ server = SimpleXMLRPCServer(("localhost", 8000),
 server.register_introspection_functions()
 
 server.register_function(startGame)
-server.register_function(exit, 'EXT')
-server.register_function(options, 'OPT')
-server.register_function(guess, 'GSS')
+server.register_function(exit)
+server.register_function(options)
+server.register_function(guess)
 server.serve_forever()
