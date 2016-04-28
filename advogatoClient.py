@@ -1,5 +1,8 @@
 import xmlrpclib
 import random
+
+def createRandomVar():
+    return random.randint(0, 100)
 server = xmlrpclib.Server("http://www.advogato.org/XMLRPC")
 
 sum,product,random_number1,random_number2=0,0,0,0
@@ -11,8 +14,8 @@ while True:
                     )
      if choiceVar == "1":
         global random_number1,random_number2
-        random_number1= random.randint(0, 100)
-        random_number2= random.randint(0, 100)
+        random_number1= createRandomVar()
+        random_number2= createRandomVar()
         print(str(random_number1)+" "+str(random_number2))
      elif choiceVar == "2":
         global sum,product,random_number1,random_number2
@@ -25,4 +28,4 @@ while True:
      else:
         print("You must enter 1-3 for selecting an option")
     except ValueError :
-     print("An error occured please try again ! \n")
+     print("You must provide a numerical value ! \n")
