@@ -8,12 +8,6 @@ def clientOptions():
     return 'GMN - Start The Guessing Game \n' \
            'EXT - Exit the Program '
 
-
-def list_gaming():
-    return 'GSS - Guess a number: GSS Number \n' \
-           'EXT - Exits the game '
-
-
 isGamingActive = False
 
 # Client Code
@@ -34,12 +28,13 @@ while True:
     else:
         global isGamingActive
         print clientOptions()
-        clientChoice = raw_input(" \n" + "Please enter your choice: ")
+        clientChoice = raw_input("Please enter your choice: ")
         if clientChoice == 'EXT':
             print("Good Bye!")
             isGamingActive = False
             break;
         elif clientChoice == 'GMN':
             print server.startGame()
+            isGamingActive = True
         else:
             print("Invalid choice please try again!")

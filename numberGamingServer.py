@@ -43,7 +43,7 @@ def startGame():
     if not (gameIsActive):
      gameIsActive = True
      actualNumber = random.randint(0, 100)
-     return 'Game has been started'+'\n'+options()
+     return 'Game has been started'+'\n'+options()+"\n"
     else:
       return 'Someone has been already playing this game. Please try later ! '
 # Restrict to a particular path.
