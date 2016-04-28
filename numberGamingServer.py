@@ -6,15 +6,18 @@ actualNumber = 0
 gameIsActive = False
 def guess(guessedNumber):
     if not checkIsNumber(guessedNumber):
-        return 'You must input an integer'
+        resultText= 'You must input an integer'
+        resultBoolean=False
     elif guessedNumber > actualNumber:
-        return 'Smaller than this'
+        resultText=  'Smaller than this'
+        resultBoolean=False
     elif guessedNumber < actualNumber:
-        return 'Bigger than this'
+        resultText= 'Bigger than this'
+        resultBoolean=False
     else:
-        exit()
-        return 'You win'
-    return
+        resultText= 'You win' +exit()
+        resultBoolean=False
+    return {'resultText':resultText, 'resultBoolean':resultBoolean}
 
 
 def exit():
@@ -33,14 +36,14 @@ def checkIsNumber(x):
         return True
 
 def options():
-    return 'STR - Start  The Guessing Game \n' \
-           'EXT - Exit'
+    return '1 - Guess  \n' \
+           '2 - Exit'
 def startGame():
     global actualNumber,gameIsActive
     if not (gameIsActive):
      gameIsActive = True
      actualNumber = random.randint(0, 100)
-     return 'Game has been started'
+     return 'Game has been started'+'\n'+options()
     else:
       return 'Someone has been already playing this game. Please try later ! '
 # Restrict to a particular path.
@@ -52,12 +55,8 @@ server = SimpleXMLRPCServer(("localhost", 8000),
                             requestHandler=RequestHandler)
 server.register_introspection_functions()
 
-server.register_function(startGame, 'STR')
+server.register_function(startGame)
 server.register_function(exit, 'EXT')
 server.register_function(options, 'OPT')
 server.register_function(guess, 'GSS')
-
-
-
-# Run the server's main loop
 server.serve_forever()
