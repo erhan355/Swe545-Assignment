@@ -25,4 +25,4 @@ while True:
      else:
         print("You must enter 1-3 for selecting an option")
     except ValueError :
-     print("An error occured please try again! \n")
+     print("An error occured please try again ! \n")
